@@ -1,6 +1,5 @@
 import time
 from macaca import WebDriverException
-from app.wechat_subscription.test_data.mine_account import *
 from conf.decorator import teststep, teststeps
 from conf.base_page import BasePage
 from utils.click_bounds import ClickBounds

@@ -16,5 +16,5 @@ class GetVariable(object):
 
     # case统计 配置信息
     SUIT_PATH = 'app'
-    CASE_PATH = 'app/wechat_program/test_cases'
-    CASE_PATTERN = 'test006*.py'
+    CASE_PATH = 'app/wechat_subscription/test_cases'
+    CASE_PATTERN = 'test001*.py'

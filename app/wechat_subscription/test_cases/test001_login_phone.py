@@ -4,6 +4,8 @@
 import unittest
 import os
 
+import time
+
 from app.wechat_subscription.object_page.home_page import HomePage
 from app.wechat_subscription.object_page.login_page import LoginPage
 from app.wechat_subscription.object_page.report_page import ReportPage
@@ -37,6 +39,7 @@ class Account(unittest.TestCase):
     def test_login_phone(self):
         self.login.app_status()  # 判断APP当前状态
 
+        self.login.page_source()
         self.home.click_sub()  # 进入公众号
         if self.home.wait_check_page():  # 页面检查点
             self.home.report_tab()  # 点击底部菜单 - 学习报告
@@ -64,7 +67,7 @@ class Account(unittest.TestCase):
                 #         self.home.buck_up_button()
                 #         self.home.report_tab()  # 点击底部菜单 - 学习报告
                 #         self.report.study_month_report()  # 点击二级标题 学习月报
-
+                self.login.page_source()
                 phone = self.home.login_phone()
                 pwd = self.home.login_password()
 
