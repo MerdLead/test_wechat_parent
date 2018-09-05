@@ -1,9 +1,11 @@
 import time
+
 from functools import wraps
 from selenium.common.exceptions import WebDriverException
 from conf.base_page import BasePage
 from conf.report_path import ReportPath
 from conf.log import Log
+
 flag = 'IMAGE:'
 log = Log()
 
@@ -31,6 +33,7 @@ def teststep(func):
             log.e('\t<-- %s, %s, %s', func.__qualname__, 'WebDriverException', 'Error')
 
             if flag in str(e):
+
                 raise WebDriverException(e)
             else:
                 raise WebDriverException(flag + _screenshot(func.__qualname__))
@@ -67,6 +70,7 @@ def teststeps(func):
             log.e('  <-- %s, %s, %s', func.__qualname__, 'WebDriverException', 'Error')
 
             if flag in str(e):
+
                 raise WebDriverException(e)
             else:
                 raise WebDriverException(flag + _screenshot(func.__qualname__))
@@ -103,6 +107,7 @@ def _wrapper(func):
             log.e('<-- %s, %s, %s\n', func.__qualname__, 'WebDriverException', 'Error')
 
             if flag in str(e):
+
                 raise WebDriverException(e)
             else:
                 raise WebDriverException(flag + _screenshot(func.__qualname__))

@@ -32,6 +32,7 @@ class WeekReport(unittest.TestCase):
 
     @testcase
     def test_week_report(self):
+
         print("\n\n---学习周报脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
         self.home.click_sub()  # 进入公众号

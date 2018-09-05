@@ -8,6 +8,7 @@ from app.wechat_subscription.object_page.home_page import HomePage
 from app.wechat_subscription.object_page.login_page import LoginPage
 from app.wechat_subscription.object_page.buy_page import BuyPage
 from app.wechat_subscription.object_page.mine_account_page import AccountPage
+
 from app.wechat_subscription.object_page.report_page import ReportPage
 from conf.decorator import testcase, setup, teardown
 
@@ -25,6 +26,7 @@ class DirectBuy(unittest.TestCase):
         cls.login = LoginPage()
         cls.buy = BuyPage()
         cls.account = AccountPage()
+
         cls.report = ReportPage()
     @classmethod
     @teardown
@@ -33,6 +35,7 @@ class DirectBuy(unittest.TestCase):
 
     @testcase
     def test_direct_buy(self):
+
         print("\n\n---直接购买脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
         self.home.click_sub()  # 进入公众号

@@ -2,6 +2,7 @@
 # code:UTF-8  
 # @Author  : SUN FEIFEI
 
+
 # 11位手机号  线上
 phone_data = [
     {'username': '18011111111', 'password': '1111'},  # 11位数字 - 非手机号
@@ -44,22 +45,22 @@ pwd_data = [
 # phone_data = [
 #     {'username': '18011111111', 'password': '1111'},  # 未注册手机号
 #     {'username': '18011110123', 'password': '123456', 'assert': ''},  #正常登录
-
 #     {'username': '132345', 'password': '123456', 'assert': '请输入正确手机号'},  # 少于11个数字  是否报错
 #     {'username': '', 'password': '123456', 'assert': '请输入手机号'},  # 手机号为空
 #     {'username': '           ', 'password': '123456', 'assert': '请输入正确手机号'},  # 11个空格
 #     {'username': '130你好8world', 'password': '123456', 'assert': '请输入正确手机号'},  # 中文、数字、英文字符组合 -11位
 #     {'username': '180q2.w@S勿x', 'password': '123456', 'assert': '请输入正确手机号'},  # 中文、数字、英文、大写字母、空格、@、'.'字符组合
+
 #     # {'username': '187111112345678', 'password': '123456'},  # 15位数字  是否限制大于11位输入
 #     {'username': '19781111111', 'password': '123123', 'assert': '该手机号尚未注册或未注册学生身份'},  # 已注册老师账号
 #     {'username': '18711111234', 'password': '123456','assert': '该手机号尚未注册，请先至学生端注册'},  # 已注册学生账号
 #     {'username': '18011111134', 'password': '123456','assert':''},  # 已注册有老师身份又有学生身份
 #     {'username': '18711111237', 'password': '123456','assert':''},  # 已注册有老师，学生，校长三重身份   # 基础版学生
-
 #     ]
 #
 # # 6-20位非空字符；只允许设置数字、英文字母（英文字母区分大小写）
 # pwd_data = [
+
 
 #     {'username': '18711111234', 'password': '123456789', 'assert': '账号或密码错误'},  # 错误密码  数字  9位
 #     {'username': '18011111234', 'password': '', 'assert': '密码错误'},   # 为空

@@ -3,6 +3,7 @@ import logging
 
 class Log:
     @classmethod
+
     def set_logger(cls, device_name, file):
         logger = logging.getLogger('appium')
         logger.setLevel(logging.INFO)
@@ -14,6 +15,7 @@ class Log:
         ch.setLevel(logging.INFO)
 
         formatter = logging.Formatter('%(asctime)s'
+
                                       + ' - %s' % device_name
                                       + ' - %(levelname)s'
                                       + ' - %(message)s')

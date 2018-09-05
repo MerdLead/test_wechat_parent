@@ -22,6 +22,7 @@ class CaseStrategy:
 
         if suite:
             test_suites = []
+
             for file in os.listdir(gv.CASE_PATH):
                 if gv.CASE_PATH in file:
                     if os.path.isdir(file):  # os.path.isdir()函数判断某一路径是否为目录

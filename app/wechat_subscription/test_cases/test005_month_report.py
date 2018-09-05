@@ -32,6 +32,7 @@ class MonthReport(unittest.TestCase):
 
     @testcase
     def test_month_report(self):
+
         print("\n\n---学习月报脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
         self.home.click_sub()  # 进入公众号
@@ -78,4 +79,5 @@ class MonthReport(unittest.TestCase):
                     print("返回学习月报页面")
         else:
             print("页面元素正常")
+
 

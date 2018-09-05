@@ -1,12 +1,14 @@
 import time
 import os
 
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from app.wechat_subscription.object_page.home_page import HomePage
 from conf.decorator import teststep, teststeps
 from conf.base_page import BasePage
 from selenium.webdriver.common.by import By
+
 class LoginPage(BasePage):
     """登录界面"""
 
@@ -15,6 +17,7 @@ class LoginPage(BasePage):
         self.home = HomePage()
 
     @teststeps
+
     def wait_check_wx(self):
         """以微信主界面“tab:微信”的text为依据"""
         try:
@@ -72,6 +75,7 @@ class LoginPage(BasePage):
     @teststeps
     def app_status(self):
         """判断应用当前状态"""
+
         if self.wait_check_wx():  # 在 微信 界面
             print('微信主界面：')
             self.clear_tbs()
@@ -82,6 +86,7 @@ class LoginPage(BasePage):
             print('其他情况：')
             self.close_app()
             self.launch_app()
+
 
             if self.wait_check_wx():  # 在 微信 主界面
                 print('微信主界面：')
@@ -116,6 +121,7 @@ class LoginPage(BasePage):
         """Close on the device the application specified in the desired capabilities.
         """
         os.system('adb shell am force-stop com.tencent.mm')
+
 
 
     @teststeps
@@ -179,4 +185,5 @@ class LoginPage(BasePage):
             print("密码错误")
         else:
             print("<><><><>")
+
 

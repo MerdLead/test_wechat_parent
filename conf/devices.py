@@ -1,4 +1,5 @@
 
+
 # coding=utf-8
 import os
 from conf.base_config import GetVariable as gv
@@ -15,12 +16,14 @@ class Devices:
         value = os.popen(self.GET_ANDROID)
 
         devices = []
+
         for v in value.readlines():   # TODO 暂时修改为只获取一个模拟器设备
             android = {}
             s_value = str(v).replace("\n", "").replace("\t", "")
             if s_value.rfind('device') != -1 and (not s_value.startswith("List")) and s_value != "":
                 android['platformName'] = 'Android'
                 android['deviceName'] = s_value[:s_value.find('device')].strip()
+
                 android['package'] = 'com.vanthink.student.debug'
                 android['platformVersion'] = gv.PLATFORM_VER
                 android['app'] = PATH(gv.APP)
@@ -70,4 +73,6 @@ class Devices:
         #     iOS['bundleId'] = 'xxxx'
         #
         #     device.append(iOS)
+
+
 

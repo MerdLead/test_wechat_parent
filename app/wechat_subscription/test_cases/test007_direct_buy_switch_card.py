@@ -30,6 +30,7 @@ class Buy(unittest.TestCase):
 
     @testcase
     def test_direct_buy_switch(self):
+
         print("\n\n---优惠卡切换脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
         self.home.click_sub()  # 进入公众号
@@ -56,6 +57,7 @@ class Buy(unittest.TestCase):
     def switch_card_operate(self):
         """切换卡片类型"""
         print('--------------------------------')
+
 
         self.buy.checkbox_1()
         ele =  self.buy.get_RadioButtons()
@@ -99,4 +101,5 @@ class Buy(unittest.TestCase):
                     self.home.buy_tab()  # 底部 购买tab
             else:
                 print("页面元素定位正常")
+
 

@@ -32,12 +32,13 @@ class Buy(unittest.TestCase):
 
     @testcase
     def test_discount_buy_now(self):
-        print("\n\n---立即购买脚本---\n\n")
 
+        print("\n\n---立即购买脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
 
         self.home.click_sub()  # 进入公众号
         content = self.account.get_info()  # 获取手机号
+
         if self.home.wait_check_parent():
             self.home.buy_tab()  # 底部 购买tab
             if self.buy.wait_check_page():  # 页面检查点
@@ -76,6 +77,7 @@ class Buy(unittest.TestCase):
         account = self.discount.stu_account_pwd()  # 学生账号  学生密码
         account[0].click()
         account[0].send_keys(username)
+
 
 
         # self.discount.tap_blank()  # 点击空白处-- 因为焦点在输入框中时，获取不到元素信息

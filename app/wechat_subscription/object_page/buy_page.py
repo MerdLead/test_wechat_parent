@@ -1,6 +1,5 @@
 import time
 
-from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,6 +12,7 @@ class BuyPage(BasePage):
     """购买tab页"""
 
     @teststeps
+
     def wait_check_page(self):
         """以title：“购买”的text为依据"""
         try:
@@ -39,6 +39,7 @@ class BuyPage(BasePage):
             WebDriverWait(self.driver, 30, 0.5).until(EC.presence_of_element_located(locator))
             return True
         except:
+
             return False
 
     @teststeps
@@ -46,6 +47,7 @@ class BuyPage(BasePage):
         """以“购买”页面所有元素 的父节点 xpath为依据"""
         time.sleep(3)
         print('---------------------')
+
 
         ele = self.driver.find_elements_by_class_name('android.view.View')
         content = []
@@ -61,9 +63,11 @@ class BuyPage(BasePage):
         return ele
 
 
+
     @teststep
     def checkbox_1(self):
         """月卡 选择框"""
+
         self.driver.find_element_by_xpath("//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[7]").click()
         time.sleep(2)
         # ClickBounds().click_bounds(65, 10)
@@ -86,6 +90,7 @@ class BuyPage(BasePage):
         time.sleep(2)
         # ClickBounds().click_bounds(70, 1400)
 
+
     @teststep
     def online_service(self):
         """在线客服 按钮 以text为依据"""
@@ -99,6 +104,7 @@ class BuyPage(BasePage):
         value = ele[index].get_attribute('contentDescription')
         kind = value.split(" ")[1]
         return kind
+
     @teststep
     def upgrade_button(self):
         """马上升级 按钮 以text为依据"""
@@ -114,18 +120,22 @@ class BuyPage(BasePage):
     @teststep
     def direct_buy_button(self):
         """点击 ‘直接购买’按钮 以text为依据"""
+
         self.driver.find_element_by_accessibility_id("直接购买").click()
+
         time.sleep(2)
 
     @teststep
     def discount_buy_button(self):
         """点击 ‘优惠购买按钮’ 以text为依据"""
+
         self.driver.find_element_by_accessibility_id("优惠购买").click()
         time.sleep(2)
 
     @teststep
     def discount_buy_button_type(self):
         """‘优惠购买按钮 是否可点击’ 以text为依据"""
+
         ele = self.driver.find_element_by_accessibility_id("优惠购买")
         value = ele.get_attribute('clickable')
         return value
@@ -134,6 +144,7 @@ class BuyPage(BasePage):
     @teststep
     def close_button(self):
         """点击 ‘OK’按钮 以text为依据"""
+
         time.sleep(5)
         self.driver.find_element_by_accessibility_id("OK").click()
         time.sleep(2)
@@ -157,6 +168,7 @@ class BuyPage(BasePage):
     @teststeps
     def commit_button(self):
         """确认支付 按钮"""
+
 
         self.driver .find_element_by_xpath("//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[12]").click()
 
@@ -190,6 +202,7 @@ class BuyPage(BasePage):
     @teststep
     def close_pay_button(self):
         """点击 微信支付页面 ‘关闭按钮’ 以text为依据"""
+
         self.driver .find_element_by_id("com.tencent.mm:id/csk").click()
         time.sleep(2)
 
@@ -208,6 +221,7 @@ class BuyPage(BasePage):
         """点击 微信支付页面 ‘完成按钮’ 以text为依据"""
         self.driver \
             .find_element_by_name("完成").click()
+
     @teststeps
     def pay_operate(self):
         """支付 过程"""
@@ -232,17 +246,20 @@ class BuyPage(BasePage):
                   '学生：', content[0], '\n',
                   '手机号：', content[1], '\n',
                   'tips:', content[3:5], '\n',
+
                   '选择的是：', content[6],'\n')
 
     @teststeps
     def magic_page_info(self, content):
         """法宝页面 信息"""
+
         if len(content) != 5:
             print('★★★ Error- <法宝>页面元素缺失:', content)
         else:
             print('<法宝>页面:', '\n',
                   '学生：', content[0], '\n',
                   '手机号：', content[1], '\n',
+
                   'tips:', content[3:], '\n')
     @teststeps
     def direct_payment_info(self, content):
@@ -253,16 +270,17 @@ class BuyPage(BasePage):
             print('<支付>页面:', '\n',
                   '学生:', content[0], '\n',
                   '手机号：', content[1], '\n',
+
                   '价格:', content[3]+content[4], '\n',
                   '购买内容:', content[5], '\n',
                   '协议:', content[9],'\n',
                   '说明:', content[14],"\n",content[15],'\n',
-
                   '-----------------------------------------')
 
     @teststeps
     def discount_payment_info(self, content):
         """支付页面 信息"""
+
         if len(content) != 17:
             print('★★★ Error- <支付>页面元素缺失:', content)
         else:
@@ -271,6 +289,7 @@ class BuyPage(BasePage):
                   '手机号：', content[1], '\n',
                   '价格:', content[3:5], '\n',
                   '购买内容:', content[5], '\n',
+
                   '协议:', content[8], '\n',
                   '说明:', content[14:16])
 
@@ -285,4 +304,6 @@ class BuyPage(BasePage):
                   '价格：', content[3], '\n',
                   '付款方式:', content[4], '\n',
                   '说明:', content[5], '\n',
+
                   content[8],'\n')
+

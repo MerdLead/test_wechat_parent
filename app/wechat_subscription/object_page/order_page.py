@@ -1,3 +1,4 @@
+
 import time
 
 from selenium.webdriver.common.by import By
@@ -12,6 +13,7 @@ class OrderPage(BasePage):
     @teststep
     def mine_order(self):
         """点公众号菜单- 我的账号- 我的订单的text为依据"""
+
         time.sleep(2)
         self.driver.find_element_by_xpath('//*[@text="我的订单"]').click()
 
@@ -22,7 +24,7 @@ class OrderPage(BasePage):
             locator = (By.XPATH,"//android.widget.TextView[contains(@text,'我的订单')]")
             WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(locator))
             return True
-        except WebDriverException:
+        except :
             return False
 
     @teststeps
@@ -31,13 +33,14 @@ class OrderPage(BasePage):
         try:
             self.driver.find_element_by_accessibility_id("我的订单")
             return True
-        except WebDriverException:
+        except :
             return False
 
     @teststeps
     def order_all_ele(self):
         """以“我的订单”所有元素 的父节点 xpath为依据"""
         print('---------------------')
+
         time.sleep(5)
         ele = self.driver.find_elements_by_class_name('android.view.View')
         content = []
@@ -55,6 +58,7 @@ class OrderPage(BasePage):
         for i in range(len(content)):
             if content[i] == '订单详情':
                 count.append(i+1)
+
 
 
         item = []
@@ -75,6 +79,7 @@ class OrderPage(BasePage):
                     print('退款中订单:', item[k])
                 else:
                     print('★★★ Error- <退款中订单>元素缺失:', item[k])
+
             elif '拼单失败,已退款' in item[k] or "购买失败,已退款" in item[k]:
                 if len(item[k]) == 5:
                     print('已退款订单', item[k])
@@ -82,6 +87,7 @@ class OrderPage(BasePage):
                     print('★★★ Error- <已退款订单>元素缺失:', item[k])
 
     @teststep
+
     def get_details_list(self):
         ele = self.driver.find_elements_by_accessibility_id('订单详情')
         return ele
@@ -96,6 +102,7 @@ class OrderPage(BasePage):
     @teststep
     def cancel_order(self, index):
         """取消订单"""
+
         self.driver.find_element_by_accessibility_id('取消订单')[index].click()
 
     @teststep
@@ -104,20 +111,22 @@ class OrderPage(BasePage):
         self.driver \
             .find_element_by_accessibility_id('我知道了').click()
 
-
     # 拼团成功
     # 拼团失败- 退款中    “退款中...”
     # 拼团失败- 退款完成  ‘已退款’
     @teststeps
     def details_page_info(self, content):
         """订单详情页面 信息"""
+
         if len(content) != 7:
+
             print('★★★ Error- <订单详情>页面元素缺失:', content)
         else:
             print('<订单详情>页面:', '\n',
                   content[0], '\n',
                   '价格：', content[1], '\n',
                   '原价：', content[2], '\n',
+
                   "购买情况：",content[3][4:],'\n',
                   '学生：', content[4], '\n',
                   '有效期：', content[5], '\n',

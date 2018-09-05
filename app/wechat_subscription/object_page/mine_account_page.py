@@ -1,5 +1,6 @@
 import time
 
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -37,11 +38,13 @@ class AccountPage(BasePage):
     @teststep
     def checkbox_button(self):
         """点 接收作业提醒 选择框 的class name为依据"""
+
         ele = self.driver.find_element_by_class_name("android.widget.CheckBox")
         return ele
 
     # 我的账号 界面
     @teststeps
+
     def wait_check_account(self):
         """以title：“我的账号”的text为依据"""
         try:
@@ -122,6 +125,7 @@ class AccountPage(BasePage):
         time.sleep(2)
 
     @teststep
+
     def confirm_update(self):
         """点击 ！！！修改页面 ‘确定按钮’ 以text为依据 多了一个空格"""
         self.driver.find_element_by_accessibility_id("确定 ").click()
@@ -151,6 +155,7 @@ class AccountPage(BasePage):
     @teststep
     def logout_button(self):
         """点击 ‘退出登录按钮’ 以text为依据"""
+
         try:
             ele = self.driver.find_element_by_class_name("android.widget.Button")
             ele.click()
@@ -169,6 +174,7 @@ class AccountPage(BasePage):
 
     @teststeps
     def logout_operate(self):
+
         ele = HomePage().get_text1()
         if ele == "我的账号":  # 我的账号 页面检查点
             print("已在 '我的账号' 页面，退出登录。")
@@ -190,6 +196,7 @@ class AccountPage(BasePage):
     @teststeps
     def get_info(self):
         """获取我的账号页面信息  手机号、备注等"""
+
         content = []
         HomePage().account_tab()  # 账号管理 tab
         self.mine_account()  # 进入 我的账号
@@ -206,7 +213,6 @@ class AccountPage(BasePage):
             print("未定位到我的账号检查点")
             return content
 
-
     @teststeps
     def stu_name_judge(self):
         """判断每个页面展示的为备注名还是昵称"""
@@ -219,6 +225,7 @@ class AccountPage(BasePage):
     @teststeps
     def compare_name(self, content, name):
         """每个页面展示的学生名称和备注 比较"""
+
         if len(content) > 8 :
             if content[-3:] == "...":
                 var = content[:8]
@@ -229,6 +236,7 @@ class AccountPage(BasePage):
 
         if var != name:
             print('★★★ Error - 学习周报页面展示的学生名字:', var)
+
 
         else:
             print("名称核实正确\n")

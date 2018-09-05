@@ -24,4 +24,3 @@ class GetVariable(object):
     # 做题情况统计 Excel表格存放路径
     EXCEL_PATH = 'storges/test_report/games_result_info.xlsx'
 
-

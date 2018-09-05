@@ -14,6 +14,7 @@ class BasePage(object):
     def get_driver(self):
         return self.driver
 
+
     def get_window_size(self):
         window = self.driver.get_window_size()
         y = window['height']
@@ -52,6 +53,7 @@ class BasePage(object):
         x1 = int(screen[0] * a)
         y1 = int(screen[1] * b)
         y2 = int(screen[1] * c)
+
         self.driver.swipe(x1, y1, x1, y2, steps)
 
     def screen_swipe_down(self, a, b, c, steps=0.5):
@@ -60,6 +62,7 @@ class BasePage(object):
         x1 = int(screen[0] * a)
         y1 = int(screen[1] * b)
         y2 = int(screen[1] * c)
+
         self.driver.swipe(x1, y1, x1, y2, steps)
 
     def get_element_location(self, ele):
@@ -107,6 +110,7 @@ class BasePage(object):
 
     def _swipe(self, from_x, from_y, to_x, to_y, steps):
 
+
         self.driver.\
             swipe(self, from_x, from_y, to_x, to_y, steps)
 
@@ -127,6 +131,7 @@ class BasePage(object):
         else:
             x, y = self.get_window_size()
             from_x = 0.5*x
+
             from_y = 0.5*y
             to_x = 0.5*x
             to_y = 0.25*y
@@ -150,12 +155,13 @@ class BasePage(object):
         else:
             x, y = self.get_window_size()
             from_x = 0.5*x
-            from_y = 0.5*y
 
+            from_y = 0.5*y
             to_x = 0.5*x
             to_y = 0.75*y
 
         self._swipe(from_x, from_y, to_x, to_y, steps)
+
 
     def swipe_left_ele(self, element=None, steps=10):
         """
@@ -179,6 +185,7 @@ class BasePage(object):
             to_y = 0.5*y
 
         self._swipe(from_x, from_y, to_x, to_y, steps)
+
 
     def swipe_right_ele(self, element=None, steps=10):
         """
@@ -222,6 +229,7 @@ class BasePage(object):
                     return e
             except WebDriverException:
                 if direction == 'up':
+
                     self.swipe_up_ele(element=element, steps=steps)
                 elif direction == 'down':
                     self.swipe_down_ele(element=element, steps=steps)
@@ -229,7 +237,6 @@ class BasePage(object):
                     self.swipe_left_ele(element=element, steps=steps)
                 elif direction == 'right':
                     self.swipe_right_ele(element=element, steps=steps)
-
                 if i == times - 1:
                     raise WebDriverException
 
@@ -239,6 +246,7 @@ class BasePage(object):
         :param using: The element location strategy.
                       "id","xpath","link text","partial link text","name","tag name","class name","css selector"
         :param value: The value of the location strategy.
+
         :param element: WebElement of appium, if None while swipe window of phone
         :param steps: steps of swipe for Android, The lower the faster
         :param max_swipe: the max times of swipe
@@ -256,6 +264,7 @@ class BasePage(object):
         :param using: The element location strategy.
                       "id","xpath","link text","partial link text","name","tag name","class name","css selector"
         :param value: The value of the location strategy.
+
         :param element: WebElement of appium, if None while swipe window of phone
         :param steps: steps of swipe for Android, The lower the faster
         :param max_swipe: the max times of swipe
@@ -272,6 +281,7 @@ class BasePage(object):
         :param using: The element location strategy.
                       "id","xpath","link text","partial link text","name","tag name","class name","css selector"
         :param value: The value of the location strategy.
+
         :param element: WebElement of appium, if None while swipe window of phone
         :param steps: steps of swipe for Android, The lower the faster
         :param max_swipe: the max times of swipe
@@ -289,6 +299,7 @@ class BasePage(object):
         :param using: The element location strategy.
                       "id","xpath","link text","partial link text","name","tag name","class name","css selector"
         :param value: The value of the location strategy.
+
         :param element: WebElement of appium, if None while swipe window of phone
         :param steps: steps of swipe for Android, The lower the faster
         :param max_swipe: the max times of swipe
@@ -306,6 +317,7 @@ class BasePage(object):
         :param using: The element location strategy.
                       "id","xpath","link text","partial link text","name","tag name","class name","css selector"
         :param value: The value of the location strategy.
+
         :param element: WebElement of appium, if None while swipe window of phone
         :param steps: steps of swipe for Android, The lower the faster
         :param max_swipe: the max times of swipe
@@ -328,6 +340,7 @@ class BasePage(object):
         :param using: The element location strategy.
                       "id","xpath","link text","partial link text","name","tag name","class name","css selector"
         :param value: The value of the location strategy.
+
         :param element: WebElement of appium, if None while swipe window of phone
         :param steps: steps of swipe for Android, The lower the faster
         :param max_swipe: the max times of swipe
@@ -394,8 +407,8 @@ class BasePage(object):
     def click_above_of_element(self, element, rate=1):
         """
         click above the gaven element
-        :param element: WebElement of appium
 
+        :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
         """
@@ -404,8 +417,8 @@ class BasePage(object):
     def click_under_of_element(self, element, rate=1):
         """
         click under the gaven element
-        :param element: WebElement of appium
 
+        :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
         """
@@ -414,6 +427,7 @@ class BasePage(object):
     def click_left_of_element(self, element, rate=1):
         """
         click the left of the gaven element
+
         :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
@@ -423,6 +437,7 @@ class BasePage(object):
     def click_right_of_element(self, element, rate=1):
         """
         click the right of the gaven element
+
         :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
@@ -432,6 +447,7 @@ class BasePage(object):
     def press_above_of_element(self, element, rate=1):
         """
         press above the gaven element
+
         :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
@@ -441,6 +457,7 @@ class BasePage(object):
     def press_under_of_element(self, element, rate=1):
         """
         press under the gaven element
+
         :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
@@ -450,6 +467,7 @@ class BasePage(object):
     def press_left_of_element(self, element, rate=1):
         """
         press the left of the gaven element
+
         :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
@@ -459,6 +477,7 @@ class BasePage(object):
     def press_right_of_element(self, element, rate=1):
         """
         press the right of the gaven element
+
         :param element: WebElement of appium
         :param rate: rate of the width or height of the element
         :return: None
@@ -639,6 +658,7 @@ class BasePage(object):
             self._tap(x, y)
         else:
             raise WebDriverException('No such accessibility id that value was you gaven.')
+
 
     def find_element(self, element):
         """判断元素是否存在"""

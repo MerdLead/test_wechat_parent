@@ -4,7 +4,9 @@
 import unittest
 import os
 
+
 from selenium.webdriver.common.by import By
+
 
 from app.wechat_subscription.object_page.home_page import HomePage
 from app.wechat_subscription.object_page.login_page import LoginPage
@@ -33,6 +35,7 @@ class MineAccount(unittest.TestCase):
 
     @testcase
     def test_mine_account(self):
+
         print("\n\n---我的账号脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
         self.home.click_sub()  # 进入公众号
@@ -82,10 +85,12 @@ class MineAccount(unittest.TestCase):
         pwd.send_keys('1111')  # 输入密码
         self.home.login_button()
 
+
     @teststeps
     def receive_remind_operate(self):
         """接收作业提醒"""
         print('-----------------------------------')
+
         value = self.account.checkbox_button().get_attribute('checked')   # 接收作业提醒 选择框check属性
         print(value)
         if value == "false":
@@ -98,12 +103,14 @@ class MineAccount(unittest.TestCase):
                 print('接收作业提醒 选择框 未被关闭')
             else:
                 self.account.checkbox_button().click()  # 打开 选择框
+
         print('-----------------------------------')
 
     @teststeps
     def modify_remark_operate(self):
         for i in range(len(remark_data)):
             self.account.remark_name()  # 点击 弹出修改备注名 弹框
+
             if self.account.wait_check_remark_name():
                 remark = self.account.remark_edittext()  # 请输入备注名 输入框
                 remark.click()   # 激活输入框

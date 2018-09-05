@@ -1,4 +1,5 @@
 
+
 # coding=utf-8
 from appium import webdriver
 
@@ -14,6 +15,7 @@ from conf.report_path import ReportPath
 from conf.runcases import RunCases
 
 
+
 class Drivers:
     @staticmethod
     def _run_cases(server_url, run, cases):
@@ -23,6 +25,7 @@ class Drivers:
         log.i('platformVersion: %s', run.get_device()['platformVersion'])
         log.i('deviceName: %s', run.get_device()['deviceName'])
         log.i('app: %s', run.get_device()['app'])
+
         # log.i('package: %s', run.get_device()['package'])
         # log.i('appActivity: %s', run.get_device()['appActivity'])
         # log.i('noReset: %s', run.get_device()['noReset'])
@@ -53,6 +56,7 @@ class Drivers:
         driver.quit()
 
     def run(self, cases):
+
         get_devices = Devices()
         # get_devices.start_android_devices()  # 启动模拟器
         # read all devices on this PC
@@ -63,6 +67,7 @@ class Drivers:
         if not len(devices):
             print('there is no device connected this PC')
             return
+
         runs = []
         for i in range(len(devices)):
             runs.append(RunCases(devices[i], ports[i]))
@@ -76,9 +81,11 @@ class Drivers:
                              args=(appium_server.server_url(run.get_port()), run, cases,))
 
             # fix bug of Appium, android driver can not init in the same time
+
             time.sleep(2)
 
         pool.close()
         pool.join()
+
         # Devices().stop_android_devices()  # 关闭模拟器
         appium_server.stop_appium_server()  # 关闭appium服务

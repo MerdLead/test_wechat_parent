@@ -6,6 +6,7 @@ import os
 
 import time
 
+
 from selenium.webdriver.common.by import By
 
 
@@ -16,7 +17,6 @@ from app.wechat_subscription.object_page.mine_account_page import AccountPage
 from app.wechat_subscription.object_page.order_page import OrderPage
 from app.wechat_subscription.test_data.mine_account import phone_data
 from conf.decorator import testcase, setup, teardown, teststeps
-
 
 
 PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))  # 获取当前路径
@@ -32,8 +32,10 @@ class Account(unittest.TestCase):
         cls.home = HomePage()
         cls.login = LoginPage()
         cls.report = ReportPage()
+
         cls.order = OrderPage()
         cls.account = AccountPage()
+
 
 
     @classmethod
@@ -43,6 +45,7 @@ class Account(unittest.TestCase):
 
     @testcase
     def test_login_phone(self):
+
         print("\n\n---验证登录脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
         self.home.click_sub()  # 进入公众号
@@ -98,6 +101,7 @@ class Account(unittest.TestCase):
                     elif i in (1, 3):
                         self.home.report_tab()  # 点击底部菜单 - 学习报告
                         self.report.study_week_report()  # 点击二级标题 学习周报
+
                     elif i == 4:
                         self.home.buy_tab()  # 点击底部菜单 - 购买
                     elif i == 5:

@@ -10,6 +10,7 @@ class Ports:
 
         # Windows
 
+
         cmd = "netstat -ano | findstr %s" % port
         if os.popen(cmd).readlines():
             return True
@@ -17,6 +18,7 @@ class Ports:
             return False
 
     def get_ports(self, count):
+
         """获得4723端口后一系列free port"""
         port = 4723
         port_list = []

@@ -5,7 +5,9 @@ import unittest
 import os
 import time
 
+
 from selenium.webdriver.common.by import By
+
 
 from app.wechat_subscription.object_page.home_page import HomePage
 from app.wechat_subscription.object_page.login_page import LoginPage
@@ -38,6 +40,7 @@ class Account(unittest.TestCase):
 
     @testcase
     def test_login_pwd(self):
+
         print("\n\n---验证密码脚本---\n\n")
         self.login.app_status()  # 判断APP当前状态
         self.home.click_sub()  # 进入公众号
@@ -95,6 +98,7 @@ class Account(unittest.TestCase):
                     elif i in (1, 3):
                         self.home.report_tab()  # 点击底部菜单 - 学习报告
                         self.report.study_week_report()  # 点击二级标题 学习周报
+
                     elif i == 4:
                         self.home.buy_tab()  # 点击底部菜单 - 购买
                     elif i == 5:

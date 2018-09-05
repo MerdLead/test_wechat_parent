@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # code:UTF-8  
 # @Author  : SUN FEIFEI
+
 import random
+
 import unittest
 import os
 
@@ -31,6 +33,7 @@ class Order(unittest.TestCase):
 
     @testcase
     def test_order(self):
+
         print("\n\n---我的订单脚本---\n\n")
 
         self.login.app_status()  # 判断APP当前状态
@@ -40,6 +43,7 @@ class Order(unittest.TestCase):
         self.order.mine_order()  # 进入 我的订单
 
         if self.order.wait_check_order_page():  # 页面检查点
+
             if not self.order.wait_check_mine_orderText():
                 self.login.clear_tbs_to_retry()
                 self.home.account_tab()  # 底部 我的账号tab

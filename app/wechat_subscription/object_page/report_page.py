@@ -1,19 +1,18 @@
 import time
 
-from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from app.wechat_subscription.object_page.home_page import HomePage
-from app.wechat_subscription.object_page.login_page import LoginPage
-from app.wechat_subscription.object_page.mine_account_page import AccountPage
+
 from conf.decorator import teststep, teststeps
 from conf.base_page import BasePage
 
 
 class ReportPage(BasePage):
     """学习报告 界面"""
+
 
     @teststeps
     def __init__(self):
@@ -59,12 +58,12 @@ class ReportPage(BasePage):
             self.driver.find_element_by_accessibility_id("晒一下")
             return True
         except:
-
             return False
 
     @teststeps
     def all_element(self):
         """以“学习周报、月报”所有元素 的父节点 xpath为依据"""
+
         ele = self.driver.find_elements_by_class_name('android.view.View')
         content = []
         for i in range(len(ele)):
@@ -93,13 +92,12 @@ class ReportPage(BasePage):
         """点 ‘晒一下’按钮 的text为依据"""
         ele = self.driver \
             .find_elements_by_name("晒一下")[index]
-
-
         value = ele.get_property('value')
         if value['clickable']:
             return True
 
     @teststeps
+
     def wait_check_share_page(self):
         """以 title:在线助教分享页 的text为依据"""
         try:
@@ -117,6 +115,7 @@ class ReportPage(BasePage):
             return True
         except:
 
+
             return False
 
     # 学习周报
@@ -130,8 +129,10 @@ class ReportPage(BasePage):
     @teststep
     def click_blank(self):
         """点击空白处-- 因为焦点在输入框中时，获取不到元素信息"""
+
         self.driver.tap([(58,1200),])
         time.sleep(2)
+
 
     # 学习月报
     @teststep
@@ -139,7 +140,6 @@ class ReportPage(BasePage):
         """年份"""
         self.driver\
             .find_element_by_xpath(
-
                 '//android.webkit.WebView[1]/android.view.View[1]/android.view.View[4]/android.view.View[2]/android.view.View[1]')\
             .click()
 
@@ -151,13 +151,12 @@ class ReportPage(BasePage):
                 '//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[4]/android.view.View[1]/android.view.View[3]/android.view.View[1]')
         return ele
 
-
-
     @teststeps
     def year_select(self, index):
         """选择不同年份"""
 
     @teststeps
+
     def month_select(self, month,index):
         """选择不同月份"""
         select_month = index
@@ -184,8 +183,10 @@ class ReportPage(BasePage):
             if content[i] == '单词本统计':
                 count.append(i)
                 break
+
         if count[0] == 2:
             print('学生:%s， 时间：%s' % (content[0][:-5], content[1]))
+
 
         else:
             print('★★★ Error - 页面中元素缺失', content)
@@ -198,11 +199,13 @@ class ReportPage(BasePage):
                   content[count[0] + 4], '\n',
                   content[count[0] + 5], '\n',
                   content[count[1]-2]+":" + content[count[1]-3], '\n',
+
                   content[count[1]-1],'\n')
         elif count[1] - count[0] == 3:  # 无统计信息
             print(content[count[0]]+':', '\n',
                   content[count[0]+2],"\n",
                 )
+
 
         return count[1] - count[0]
 
@@ -221,6 +224,7 @@ class ReportPage(BasePage):
                   content[count[0] + 3] + content[count[0] + 4] + content[count[0] + 5])
         elif len(content) - count[0] == 3:  # 单词本统计
             print(content[count[0]], ':', '\n',
+
                   content[len(content)-1],'\n')
 
 
@@ -237,7 +241,9 @@ class ReportPage(BasePage):
                   content[5], '\n',
                   content[7] + ":" + content[6], '\n',
                   content[8]+content[9]+content[10], '\n',
+
                   content[11],'\n')
+
 
 
     @teststeps
@@ -249,6 +255,7 @@ class ReportPage(BasePage):
             print('分享页：', '\n',
                   content[2] + content[3] + content[4], '\n',
                   content[5])
+
 
     @teststeps
     def month_all_info(self, content):
@@ -263,6 +270,7 @@ class ReportPage(BasePage):
                   content[9],'\n')
 
 
+
     @teststeps
     def month_share_all_info(self, content):
         """学习月报 分享页面 信息"""
@@ -274,6 +282,7 @@ class ReportPage(BasePage):
                   content[4])
 
         print('----------------------------------------------')
+
 
     @teststeps
     def swipe_up(self, a, b, c, t=500):

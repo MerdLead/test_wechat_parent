@@ -1,5 +1,6 @@
 import time
 
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,6 +13,7 @@ class DiscountPage(BasePage):
     """优惠页"""
 
     @teststeps
+
     def wait_check_page(self):
         """以title：“立即购买”的text为依据"""
         try:
@@ -26,6 +28,7 @@ class DiscountPage(BasePage):
         """以“优惠页”页面所有元素 的父节点 xpath为依据"""
         time.sleep(3)
         print('---------------------')
+
         ele = self.driver.find_elements_by_class_name('android.view.View')
         content = []
         for i in range(len(ele)):
@@ -37,6 +40,7 @@ class DiscountPage(BasePage):
     @teststep
     def checkbox_1(self):
         """半年卡 选择框"""
+
         self.driver.find_element_by_xpath(
             "//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[13]").click()
         time.sleep(2)
@@ -44,6 +48,7 @@ class DiscountPage(BasePage):
     @teststep
     def checkbox_2(self):
         """年卡卡 选择框"""
+
 
         self.driver.find_element_by_xpath(
             "//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[16]/android.view.View[1]").click()
@@ -70,6 +75,7 @@ class DiscountPage(BasePage):
     @teststep
     def buy_now_button(self):
         """点击 ‘立即购买 按钮’ 以text为依据"""
+
         self.driver.find_element_by_accessibility_id("立即购买").click()
 
         time.sleep(2)
@@ -143,6 +149,7 @@ class DiscountPage(BasePage):
 
     @teststep
     def close_button(self):
+
         """点击 微信支付页面 ‘关闭按钮’ 以id为依据"""
         self.driver \
             .find_element_by_id("com.tencent.mm:id/csk").click()
@@ -268,6 +275,7 @@ class DiscountPage(BasePage):
                   content[5] + ":" + content[6])
 
     @teststeps
+
     def pay_form(self):
         ele = self.driver.find_element_by_class_name("android.widget.CheckBox")
         value = ele.get_attribute("contentDescription")
@@ -288,6 +296,7 @@ class DiscountPage(BasePage):
     @teststeps
     def payment_info(self, content):
         """支付页面 信息"""
+
         pay = self.pay_form()
         if len(content) == 11:
             print('<支付>页面:', '\n',
@@ -296,6 +305,7 @@ class DiscountPage(BasePage):
                   '价格:', content[3], '\n',
                   '原价:', content[4], '\n',
                   '学生:', content[5], '\n',
+
                   content[6], ':',pay, '\n',
                   '协议:', content[8], '\n',
                   '实际付款金额:', content[9])
@@ -307,6 +317,7 @@ class DiscountPage(BasePage):
                   '原价:', content[4], '\n',
                   content[5]+':'+content[6], '\n',
                   '学生:', content[7], '\n',
+
                   content[8], ':', pay, '\n',
                   '协议:', content[10], '\n',
                   '实际付款金额:', content[11])

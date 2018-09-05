@@ -1,5 +1,6 @@
 import time
 
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,6 +13,7 @@ class HomePage(BasePage):
     """主界面"""
 
     @teststeps
+
     def wait_check_page(self,locator):
         try:
             WebDriverWait(self.driver, 30, 0.5).until(EC.presence_of_element_located(locator))
@@ -72,6 +74,7 @@ class HomePage(BasePage):
     @teststep
     def click_sub(self):
         """点开公众号 的text为依据"""
+
         self.click_find_icon()
         if self.wait_check_findText():
             find_ele = self.find_exp()
@@ -106,9 +109,9 @@ class HomePage(BasePage):
     @teststep
     def account_tab(self):
         """点公众号菜单- 我的账号的text为依据"""
+
         time.sleep(5)
         self.driver.find_element_by_xpath('//*[@resource-id="com.tencent.mm:id/af8"]/android.widget.FrameLayout[3]/android.widget.LinearLayout[1]').click()
-
 
     @teststep
     def cancel_button(self):
@@ -158,11 +161,13 @@ class HomePage(BasePage):
             WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(locator))
             return True
         except:
+
             return False
 
     @teststep
     def login_phone(self):
         """手机号 输入框的text为依据"""
+
         ele = self.driver.find_element_by_accessibility_id("请输入手机号")
         return ele
 
@@ -170,20 +175,22 @@ class HomePage(BasePage):
     def login_password(self):
         """密码 输入框的text为依据"""
 
+
         ele = self.driver.find_element_by_xpath("//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[5]/android.widget.EditText[1]")
         return ele
 
     @teststep
     def login_button(self):
         """登录 button的text为依据"""
+
         self.driver.find_element_by_class_name("android.widget.Button").click()
 
     @teststep
     def show_password(self):
         """显示密码 的text为依据"""
+
         self.driver.find_element_by_xpath("//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[6]").click()
         time.sleep(2)
-
 
     @teststep
     def here_button(self):
@@ -203,7 +210,6 @@ class HomePage(BasePage):
     def page_source(self):
         """以“获取page_source”的TEXT为依据"""
         print('打开：', self.driver.page_source)
-
 
     @teststeps
     def login_operate(self, username, password):
