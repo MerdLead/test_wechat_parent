@@ -3,6 +3,7 @@
 # @Author  : SUN FEIFEI
 import unittest
 import os
+from datetime import datetime
 
 from app.wechat_subscription.object_page.home_page import HomePage
 from app.wechat_subscription.object_page.login_page import LoginPage
@@ -24,6 +25,8 @@ class MonthReport(unittest.TestCase):
         cls.login = LoginPage()
         cls.report = ReportPage()
         cls.account = AccountPage()
+        cls.login.app_status ()  # 判断APP当前状态
+        cls.home.click_sub ()  # 进入公众号
 
     @classmethod
     @teardown
@@ -32,28 +35,25 @@ class MonthReport(unittest.TestCase):
 
     @testcase
     def test_month_report(self):
-
-        print("\n\n---学习月报脚本---\n\n")
-        self.login.app_status()  # 判断APP当前状态
-        self.home.click_sub()  # 进入公众号
-
-        if self.home.wait_check_parent():
+        print("\n---学习月报脚本---\n\n")
+        if self.home.wait_check_parent_title():
             name = self.account.stu_name_judge()  # 获取备注名
-            print(name)
-            if self.home.wait_check_parent():
+
+            if self.home.wait_check_parent_title():
                 self.home.report_tab()  # 底部 学习报告tab
                 self.report.study_month_report()  # 进入 学习月报
 
                 if self.report.wait_check_month_page():  # 页面检查点
-                    self.judge_report_tbs()  # 判断内核是否存在
-
                     content1 = self.report.all_element()  # 学习月报 页面所有元素
                     self.report.month_all_info(content1[1]) #学习月报页面元素校验
-                    self.account.compare_name(content1[1][0][:-6],name[0][:8])  # 备注名比较 name[0][:8]备注名前8位
+
+                    remark_name = name[0] if len(name[0]) <= 8 else name[0][:8]
+                    self.account.compare_name(content1[1][0][:-5],remark_name)  # 备注名比较 name[0][:8]备注名前8位
 
                     month = self.report.month()  # 月份
-                    value = month.get_attribute('contentDescription')
-                    if value!= '8月':
+                    value = month.text
+                    month_time = datetime.now().month
+                    if value!= str(month_time)+"月":
                         print('★★★ Error - 展示的月份不是当前月份', month.text)
 
                     self.report.share_button(0)  # 晒一下 按钮
@@ -61,8 +61,8 @@ class MonthReport(unittest.TestCase):
                         self.report.click_blank()  # 点击空白处 - 使浮层消失
                         share = self.report.all_element()  # 分享页 所有元素
                         self.report.month_share_all_info(share[1])  # 元素信息判断
+                        self.account.compare_name(share[1][1].split(' ')[0], remark_name)  # 备注名比较
 
-                        # self.account.compare_name(share[1][1], name[0])  # 备注名比较
                     else:
                         print("\n无数据统计\n")
                         print('-----------------------')
@@ -70,14 +70,12 @@ class MonthReport(unittest.TestCase):
 
     @testcase
     def judge_report_tbs(self):
+        """判断tbs内核"""
         if not self.report.wait_check_report_show():
             self.login.clear_tbs_to_retry()
-            if self.home.wait_check_parent():
+            if self.home.wait_check_parent_title():
                 self.home.report_tab()  # 底部 学习报告tab
                 self.report.study_month_report()  # 进入 学习月报
                 if self.report.wait_check_month_page():
                     print("返回学习月报页面")
-        else:
-            print("页面元素正常")
-
 

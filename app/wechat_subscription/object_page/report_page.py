@@ -45,7 +45,7 @@ class ReportPage(BasePage):
     def wait_check_month_page(self):
         """以 title:学习月报 的text为依据"""
         try: 
-            locator = (By.XPATH,"//android.widget.TextView[contains(@text,'学习月报')]")
+            locator = (By.XPATH,"//android.view.View[contains(@text,'晒一下')]")
             WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(locator))
             return True
         except :
@@ -63,13 +63,12 @@ class ReportPage(BasePage):
     @teststeps
     def all_element(self):
         """以“学习周报、月报”所有元素 的父节点 xpath为依据"""
-
         ele = self.driver.find_elements_by_class_name('android.view.View')
         content = []
         for i in range(len(ele)):
-            value = ele[i].get_attribute('contentDescription')
+            value = ele[i].text
             if value!= '':
-                if value is None:
+                if value is None or value.isspace():
                     continue
                 else:
                     content.append(value)
@@ -78,7 +77,7 @@ class ReportPage(BasePage):
     @teststep
     def share_button(self,index):
         """点 ‘晒一下’按钮 的text为依据"""
-        self.driver.find_elements_by_accessibility_id("晒一下")[index].click()
+        self.driver.find_elements_by_xpath('//*[@text="晒一下"]')[index].click()
 
     @teststep
     def share_button_count(self):
@@ -129,7 +128,6 @@ class ReportPage(BasePage):
     @teststep
     def click_blank(self):
         """点击空白处-- 因为焦点在输入框中时，获取不到元素信息"""
-
         self.driver.tap([(58,1200),])
         time.sleep(2)
 
@@ -148,7 +146,8 @@ class ReportPage(BasePage):
         """月份"""
         ele = self.driver \
             .find_element_by_xpath(
-                '//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[4]/android.view.View[1]/android.view.View[3]/android.view.View[1]')
+                '//android.webkit.WebView[1]/android.view.View[1]/android.view.View[1]/android.view.View[4]/'
+                'android.view.View[3]/android.view.View[1]')
         return ele
 
     @teststeps
@@ -264,7 +263,7 @@ class ReportPage(BasePage):
             print('★★★ Error - 页面中元素缺失', content)
         else:
             print(content[0], ' ', content[1], '\n','\n',
-                  content[2], content[3], content[4], '\n',
+                  content[2], content[3]+ content[4], '\n',
                   content[7], '\n',
                   content[8], '\n',
                   content[9],'\n')

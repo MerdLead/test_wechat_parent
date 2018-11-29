@@ -12,35 +12,78 @@ from utils.click_bounds import ClickBounds
 class DiscountPage(BasePage):
     """优惠页"""
 
-    @teststeps
-
-    def wait_check_page(self):
+    @teststep
+    def wait_check_dicount_page(self):
         """以title：“立即购买”的text为依据"""
         try:
-            ele = (By.XPATH, "//android.widget.TextView[contains(@text,'长留-在线助教优惠活动')]")
+            ele = (By.XPATH, "//android.widget.TextView[contains(@text,'在线助教优惠活动')]")
             WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(ele))
             return True
         except :
             return False
 
-    @teststeps
-    def all_element(self):
-        """以“优惠页”页面所有元素 的父节点 xpath为依据"""
-        time.sleep(3)
-        print('---------------------')
+    @teststep
+    def wait_check_discount_title(self):
+        try:
+            ele = (By.XPATH, "//android.view.View[contains(@text,'立即购买')]")
+            WebDriverWait(self.driver, 10, 0.5).until(EC.presence_of_element_located(ele))
+            return True
+        except:
+            return False
 
+    @teststep
+    def wait_check_group_tip(self):
+        """拼团提示"""
+        try:
+            self.driver.find_element_by_xpath('//*[@text="三人成团"]')
+            return True
+        except:
+            return False
+
+    @teststep
+    def wait_check_year_card_page(self):
+        try:
+            ele = (By.XPATH, "//android.widget.TextView[contains(@text,'在线助教年卡优惠')]")
+            WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(ele))
+            return True
+        except:
+            return False
+
+    @teststep
+    def wait_check_user_image(self):
+        """用户头像检查点"""
+        try:
+            ele = (By.CLASS_NAME, "android.widget.Image")
+            WebDriverWait (self.driver, 15, 0.5).until (EC.presence_of_element_located (ele))
+            return True
+        except:
+            return False
+
+    @teststep
+    def wait_check_pay_page(self):
+        """以title：“请输入支付密码'的text为依据"""
+        try:
+            ele = (By.XPATH, "//android.widget.TextView[contains(@text,'请输入支付密码')]")
+            WebDriverWait (self.driver, 15, 0.5).until (EC.presence_of_element_located (ele))
+            return True
+        except:
+            return False
+
+    @teststep
+    def get_view_ele(self):
         ele = self.driver.find_elements_by_class_name('android.view.View')
-        content = []
-        for i in range(len(ele)):
-            value = ele[i].get_attribute('contentDescription')
-            if value != '':
-                content.append(value)
-        return ele, content
+        return ele
+
+    @teststep
+    def get_text_view_ele(self):
+        ele = self.driver.find_elements_by_class_name('android.widget.TextView')
+        return ele
+
+
 
     @teststep
     def checkbox_1(self):
         """半年卡 选择框"""
-
         self.driver.find_element_by_xpath(
             "//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[13]").click()
         time.sleep(2)
@@ -48,150 +91,116 @@ class DiscountPage(BasePage):
     @teststep
     def checkbox_2(self):
         """年卡卡 选择框"""
-
-
         self.driver.find_element_by_xpath(
             "//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[16]/android.view.View[1]").click()
         time.sleep(2)
 
-
-    @teststep
-    def card_type(self):
-        """所选卡片的类型"""
-        ele = self.driver.\
-            find_element_by_xpath('//android.webkit.WebView[1]/android.view.View[1]/android.view.View[2]')
-
-        value = ele.get_property('value')
-        return value['description']
-
-    @teststep
-    def see_button(self):
-        """点击 ‘去看看按钮’ 以text为依据"""
-        self.driver \
-            .find_element_by_name("去看看").click()
-
-        time.sleep(2)
-
     @teststep
     def buy_now_button(self):
-        """点击 ‘立即购买 按钮’ 以text为依据"""
-
-        self.driver.find_element_by_accessibility_id("立即购买").click()
-
-        time.sleep(2)
-
-    # 去看看页面
-    @teststep
-    def group_buy_button(self):
-        """点击 ‘一键开团按钮’ 以text为依据"""
-        self.driver \
-            .find_element_by_name("一键开团").click()
-        time.sleep(2)
+        """点击 ‘立即购买 按钮’ 以content为依据"""
+        self.driver.find_element_by_xpath('//android.view.View[contains(@text,"立即购买")]').click()
 
     @teststep
-    def stu_account_pwd(self):
-        """学生账号 学生密码"""
+    def stu_phone_pwd(self):
+        """ 学生账号 """
         ele = self.driver.\
             find_elements_by_class_name('android.widget.EditText')
         return ele
 
     @teststep
-    def tap_blank(self):
-        """点击空白处-- 因为焦点在输入框中时，获取不到元素信息"""
-        self.driver \
-            .touch('tap', {
-                'x': 540,
-                'y': 300
-            })
-        time.sleep(2)
+    def back_to_discount_page(self):
+        self.driver.find_element_by_xpath('//*[@resource-id="app"]/android.view.View[1]/android.view.View[1]').click()
 
     @teststep
     def commit_button(self):
-        """点击 ‘确定 按钮’ 以text为依据"""
-        self.driver \
-            .find_element_by_accessibility_id("确定 ").click()
+        """点击 ‘确定 按钮’ 以tcontent为依据"""
+        self.driver.find_element_by_xpath('//android.view.View[contains(@text,"确定")]').click()
         time.sleep(2)
 
     @teststeps
     def wait_check_buycard_page(self):
-        """以title：“购买学习卡”的text为依据"""
+        """以title：“购买学习卡”的content为依据"""
         try:
-            self.driver.find_element_by_accessibility_id('购买学习卡')
+            locator = (By.XPATH, '//android.view.View[contains(@text,"购买学习卡")]')
+            WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(locator))
             return True
-        except :
-            return False
-
-    @teststeps
-    def wait_check_user_image(self):
-        try:
-            ele = (By.CLASS_NAME, "android.widget.Image")
-            WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(ele))
-            return True
-        except :
+        except:
             return False
 
     @teststep
-    def now_payfor_button(self):
-        """点击 ‘立即支付按钮’ 以text为依据"""
-        self.driver \
-            .find_element_by_accessibility_id("立即支付").click()
-        time.sleep(2)
+    def group_key_button(self):
+        """一键开团按钮"""
+        self.driver.find_element_by_xpath('//*[@text="一键开团"]').click()
 
-    @teststeps
-    def wait_check_pay_page(self):
-        """以title：“确认支付”的text为依据"""
-        try:
-            ele = (By.XPATH, "//android.widget.TextView[contains(@text,'请输入支付密码')]")
-            WebDriverWait(self.driver, 15, 0.5).until(EC.presence_of_element_located(ele))
-            return True
-        except :
-            return False
+    @teststep
+    def pay_now_button(self):
+        """点击 ‘立即支付按钮’ 以text为依据"""
+        self.driver.find_element_by_xpath('//*[@text="立即支付"]').click()
+
 
     @teststep
     def close_button(self):
-
         """点击 微信支付页面 ‘关闭按钮’ 以id为依据"""
         self.driver \
             .find_element_by_id("com.tencent.mm:id/csk").click()
         time.sleep(2)
 
+    @teststeps
+    def pay_form(self):
+        ele = self.driver.find_element_by_class_name ("android.widget.CheckBox")
+        return ele.text[2:]
+
     @teststep
-    def finish_button(self):
-        """点击 微信支付页面 ‘完成按钮’ 以text为依据"""
-        self.driver \
-            .find_element_by_name("完成").click()
+    def see_button(self):
+        """去看看"""
+        self.driver\
+            .find_element_by_xpath('//*[@text="去看看"]').click()
+
+    @teststep
+    def card_type(self):
+        ele = self.driver.find_element_by_xpath('//android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[2]')
+        return ele.get_attribute('contentDescription')
 
     @teststeps
-    def wait_check_pay_success_page(self, timeout=10000):
-        """以title：“支付成功”的text为依据"""
-        try:
-            self.driver \
-                .wait_for_find_element_by_name('支付成功', timeout=timeout)
-            return True
-        except :
-            return False
+    def all_element(self, ele):
+        """获取页面元素"""
+        content = []
+        for i in range(len(ele)):
+            value = ele[i].text
+            if value != '':
+                if value is None or value.isspace() or '\\u' in value:
+                    continue
+                else:
+                    content.append(value)
+        return ele, content
 
-    @teststeps
-    def wait_check_finish_page(self, timeout=10000):
-        """以title：“购买情况”的text为依据"""
-        try:
-            self.driver \
-                .wait_for_find_element_by_name('购买情况', timeout=timeout)
-            return True
-        except :
-            return False
 
     @teststeps
     def discount_card_info(self, content):
-        if len(content) ==10:
-            half_card = content[:4]
-            year_card = content[4:8]
+        """优惠卡页面元素"""
+        if len(content) == 10:
             print("优惠卡页面：\n",
-                  "半年卡：",half_card,'\n',
-                  '年卡：',year_card
+                  content[0] + content[1],'\n',
+                  content[2],'\n',
+                  content[3],
+                  content[4] + content[5], '\n',
+                  content[6], '\n',
+                  content[7],'\n'
+                  )
+        elif len(content) == 15:
+            print("优惠卡页面：\n",
+                  content[0] + content[1], '\n',
+                  content[2], '\n',
+                  content[3],
+                  content[4] + content[5], '\n',
+                  content[6], '\n',
+                  content[7], '\n',
+                  ''.join(content[8:]), '\n'
                   )
         else:
-            print("★★★ Error->优惠页面元素个数不正确！！")
+            print('★★★ Error- <购买>页面元素缺失:', content)
+
+        print('-'*30)
 
     @teststeps
     def buy_page_info(self, content):
@@ -252,7 +261,7 @@ class DiscountPage(BasePage):
         else:
             var = 1
 
-        if len(content) != 14 + var - 1:
+        if len(content) != 13 + var - 1:
             print('★★★ Error- <优惠卡具体信息>页面元素缺失:', content)
         else:
             print(content[0], '\n',
@@ -265,7 +274,7 @@ class DiscountPage(BasePage):
     @teststeps
     def group_page_info(self, content):
         """点击 一键开团后 页面 信息"""
-        if len(content) != 10:
+        if len(content) != 9:
             print('★★★ Error- <开团>页面元素缺失:', content)
         else:
             print(content[1], '\n',
@@ -275,30 +284,27 @@ class DiscountPage(BasePage):
                   content[5] + ":" + content[6])
 
     @teststeps
-
-    def pay_form(self):
-        ele = self.driver.find_element_by_class_name("android.widget.CheckBox")
-        value = ele.get_attribute("contentDescription")
-        return value[2:]
-
-
-    @teststeps
     def buy_now_page_info(self, content):
         """点击 立即购买后 页面 信息"""
-        if len(content) != 8:
-            print('★★★ Error- <开团>页面元素缺失:', content)
-        else:
+        if len(content) == 8:
             print(content[1], '\n',
                   content[2], '\n',
                   '拼团价：', content[3], '\n',
-                  '原价:', content[4])
+                  '原价:', content[4],'\n')
+        elif len(content) == 10:
+            print(content[1],'\n',
+                  content[2],'\n',
+                  '拼团价：', content[3], '\n',
+                  '原价:', content[4], '\n',
+                  content[5],":",content[6],'\n')
+        else:
+            print('★★★ Error- <优惠>页面元素缺失:', content)
 
     @teststeps
     def payment_info(self, content):
         """支付页面 信息"""
-
         pay = self.pay_form()
-        if len(content) == 11:
+        if len(content) == 12:
             print('<支付>页面:', '\n',
                   content[1], '\n',
                   content[2], '\n',
@@ -307,9 +313,10 @@ class DiscountPage(BasePage):
                   '学生:', content[5], '\n',
 
                   content[6], ':',pay, '\n',
-                  '协议:', content[8], '\n',
-                  '实际付款金额:', content[9])
-        elif len(content) == 13:
+                  '协议:', content[8]+ content[9],'\n',
+                  '实际付款金额:', content[10], '\n')
+
+        elif len(content) == 14:
             print('<支付>页面:', '\n',
                   content[1], '\n',
                   content[2], '\n',
@@ -319,23 +326,11 @@ class DiscountPage(BasePage):
                   '学生:', content[7], '\n',
 
                   content[8], ':', pay, '\n',
-                  '协议:', content[10], '\n',
-                  '实际付款金额:', content[11])
+                  '协议:', content[10] + content[11], '\n',
+                  '实际付款金额:', content[12], '\n')
         else:
             print('★★★ Error- <支付>页面元素缺失:', content)
 
-    @teststeps
-    def pay_operate(self):
-        """支付 过程"""
-        ClickBounds().click_bounds(180, 1650)
-        ClickBounds().click_bounds(180, 1650)
-        ClickBounds().click_bounds(900, 1300)
-        ClickBounds().click_bounds(550, 1470)
-        ClickBounds().click_bounds(550, 1670)
-        ClickBounds().click_bounds(900, 1480)
-
-        if self.wait_check_pay_success_page():
-            self.finish_button()  # 点击完成按钮
 
     @teststeps
     def finish_page_info(self, content):
@@ -358,3 +353,18 @@ class DiscountPage(BasePage):
                   content[3], ':', content[4], '\n',
                   content[5], ':', content[6], content[7], content[8], '\n',
                   content[9])
+
+
+    @teststeps
+    def group_ele_operate(self, content):
+        if len(content) == 14:
+            print(content[0], '\n',
+                  "拼图价：", content[1], '\n',
+                  '原价：', content[2], '\n',
+                  content[3], ":", content[4], '\n',
+                  content[5], ":", content[6] + content[7] +
+                  content[8] +content[9], '\n',
+                  content[10], '\n',
+                  content[13], '\n')
+
+

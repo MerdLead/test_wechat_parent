@@ -24,6 +24,8 @@ class WeekReport(unittest.TestCase):
         cls.login = LoginPage()
         cls.report = ReportPage()
         cls.account = AccountPage()
+        cls.login.app_status ()  # 判断APP当前状态
+        cls.home.click_sub ()  # 进入公众号
 
     @classmethod
     @teardown
@@ -32,40 +34,34 @@ class WeekReport(unittest.TestCase):
 
     @testcase
     def test_week_report(self):
+        print("\n---学习周报脚本---\n\n")
 
-        print("\n\n---学习周报脚本---\n\n")
-        self.login.app_status()  # 判断APP当前状态
-        self.home.click_sub()  # 进入公众号
-
-        if self.home.wait_check_parent():
+        if self.home.wait_check_parent_title():
             name = self.account.stu_name_judge()  # 获取备注名
-            if self.home.wait_check_parent():
+            if self.home.wait_check_parent_title():
                 self.home.report_tab()  # 底部 学习报告tab
                 self.report.study_week_report()  # 进入 学习周报
 
                 if self.report.wait_check_week_page():  # 页面检查点
-                    self.judge_report_tbs()  # 判断内核是否存在
 
                     content1 = self.report.all_element()  # 学习周报 页面所有元素
                     count1 = self.report.homework_all_info(content1[1])  # 作业卷子统计 元素信息判断
                     self.account.compare_name(content1[1][0][:-6], name[0][:8])  # 备注名比较 name[0][:8]备注名前8位
 
                     self.report_homework_count() #作业卷子统计情况
-                    if self.home.wait_check_parent():
+                    if self.home.wait_check_parent_title():
                         self.home.report_tab()  # 底部 学习报告tab
                         self.report.study_week_report()  # 进入 学习周报
-                        if self.report.wait_check_week_page():  # 页面检查点
-                            self.judge_report_tbs()
-                            if self.report.wait_check_week_page():
-                                 self.report_wordbook_count(count1) #单词本统计情况
-                                 self.home.back_to_mainPage()  # 返回主界面
+                        if self.report.wait_check_week_page():
+                             self.report_wordbook_count(count1) #单词本统计情况
+                             self.home.back_to_mainPage()  # 返回主界面
 
 
     @testcase
     def judge_report_tbs(self):
         if not self.report.wait_check_report_show():
             self.login.clear_tbs_to_retry()
-            if self.home.wait_check_parent():
+            if self.home.wait_check_parent_title():
                 self.home.report_tab()  # 底部 学习报告tab
                 self.report.study_week_report()  # 进入 学习周报
                 if self.report.wait_check_week_page():

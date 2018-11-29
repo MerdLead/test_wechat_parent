@@ -25,6 +25,8 @@ class Order(unittest.TestCase):
         cls.home = HomePage()
         cls.login = LoginPage()
         cls.order = OrderPage()
+        cls.login.app_status ()  # 判断APP当前状态
+        cls.home.click_sub ()  # 进入公众号
 
     @classmethod
     @teardown
@@ -33,51 +35,22 @@ class Order(unittest.TestCase):
 
     @testcase
     def test_order(self):
+        print("\n---我的订单脚本---\n\n")
+        if self.home.wait_check_parent_title ():
+            self.home.account_tab()  # 底部 我的账号tab
+            self.order.mine_order()  # 进入 我的订单
 
-        print("\n\n---我的订单脚本---\n\n")
+            if self.order.wait_check_order_page():  # 页面检查点
+                content = self.order.order_all_ele()
+                ele_array = self.order.order_info(content)  # 元素信息判断
 
-        self.login.app_status()  # 判断APP当前状态
+                ele = self.order.get_details_list()
+                index = 1
+                ele[index].click()  # 订单详情
 
-        self.home.click_sub()  # 进入公众号
-        self.home.account_tab()  # 底部 我的账号tab
-        self.order.mine_order()  # 进入 我的订单
+                if self.order.wait_check_detail_page():
+                    details = self.order.order_all_ele()  # 我的订单 所有元素
+                    self.order.details_page_info(details, ele_array[index][1])  # 元素信息判断
 
-        if self.order.wait_check_order_page():  # 页面检查点
+                self.home.back_to_mainPage()  # 返回主界面
 
-            if not self.order.wait_check_mine_orderText():
-                self.login.clear_tbs_to_retry()
-                self.home.account_tab()  # 底部 我的账号tab
-                self.order.mine_order()  # 进入 我的订单
-
-            content = self.order.order_all_ele()
-            self.order.order_info(content[1])  # 元素信息判断
-
-            ele = self.order.get_details_list()
-            ele[random.randint(0,len(ele)-1)].click()  # 订单详情
-            details = self.order.order_all_ele()  # 我的订单 所有元素
-            self.order.details_page_info(details[1])  # 元素信息判断
-
-            self.home.back_to_mainPage()  # 返回主界面
-
-    # @teststeps
-    # def get_all_order(self):
-    #     """获取页面内所有订单的信息"""
-    #     content1 = self.order.order_all_ele()  # 我的订单 所有元素
-    #     self.order.screen_swipe_up(0.5,0.95,0.25)
-    #     content2 = self.order.order_all_ele()  # 我的订单 所有元素
-    #
-    #     count = []
-    #     var = content1[1][len(content1[1]) - 4]
-    #     if var in content2[1]:
-    #         for i in range(len(content2[1])):
-    #             if content2[1][i] == var:
-    #                 count.append(i)
-    #                 break
-    #
-    #         if count[0] != len(content2[1]) - 4:
-    #             content = content1[1] + content2[1][count[0] + 4:]
-    #         else:
-    #             content = content1[1]
-    #     else:
-    #         content = content1[1]
-    #     return content

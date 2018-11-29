@@ -9,11 +9,11 @@ class GetVariable(object):
     REPORT_ROOT = 'storges/test_report'  # 测试报告存放路径
     # 以下为 devices.py 配置信息
     APP = '../weixin_1340.apk'
-    PLATFORM_VER = '7.1.2'
+    PLATFORM_VER = '5.1'
 
     # case统计 配置信息
     CASE_PATH = 'app/wechat_subscription/test_cases'
-    CASE_PATTERN = 'test004*.py'
+    CASE_PATTERN = 'test003*.py'
 
     # 以下为 appium_server.py 配置信息
     CMD = "appium -a 127.0.0.1 -p %s -bp 4728 --no-reset"

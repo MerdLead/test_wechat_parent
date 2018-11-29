@@ -27,6 +27,9 @@ class MineAccount(unittest.TestCase):
         cls.home = HomePage()
         cls.login = LoginPage()
         cls.account = AccountPage()
+        cls.login.app_status ()  # 判断APP当前状态
+        cls.home.click_sub ()  # 进入公众号
+
 
     @classmethod
     @teardown
@@ -35,30 +38,28 @@ class MineAccount(unittest.TestCase):
 
     @testcase
     def test_mine_account(self):
-
-        print("\n\n---我的账号脚本---\n\n")
-        self.login.app_status()  # 判断APP当前状态
-        self.home.click_sub()  # 进入公众号
-        if self.home.wait_check_parent():
+        print("\n---我的账号脚本---\n\n")
+        if self.home.wait_check_parent_title():
             self.home.account_tab()
             self.account.mine_account()
 
-            if self.account.wait_check_account():  # 我的账号 页面检查点
+            if self.account.wait_check_account_page():  # 我的账号 页面检查点
                 print('在 我的账号 页面：')
-                self.jude_tbs_is_exit()
-                self.get_change_accountEle()
+                # self.jude_tbs_is_exit()       #判断tbs是否存在
+                self.get_change_accountEle()  #接收页面元素
             elif self.home.wait_check_login_page():
                 print("在 登录 页面")
-                self.jude_tbs_is_exit()
+                # self.jude_tbs_is_exit()        #判断tbs是否存在
                 if self.home.wait_check_login_page():
-                    self.login_mine_account()
-                    if self.account.wait_check_account():
-                        self.get_change_accountEle()
-                    else:
-                        print("ERROR！登录未成功")
+                    self.login_mine_account( ) #登录账号
+                if self.account.wait_check_account_page():
+                    self.get_change_accountEle() #获取页面元素信息
+                else:
+                    print("ERROR！登录未成功")
 
     @testcase
     def jude_tbs_is_exit(self):
+        """"判断tbs是否存在"""
         if not self.home.wait_check_button():
             self.login.clear_tbs_to_retry()
             self.home.account_tab()
@@ -68,6 +69,7 @@ class MineAccount(unittest.TestCase):
 
     @testcase
     def get_change_accountEle(self):
+        """获取页面元素及更改备注"""
         content = self.account.account_all_ele()  # 所有元素
         self.account.account_info(content)  # 元素信息判断
         self.receive_remind_operate()  # 接收作业提醒
@@ -77,22 +79,20 @@ class MineAccount(unittest.TestCase):
 
     @testcase
     def login_mine_account(self):
-        phone = self.home.login_phone()
-        pwd = self.home.login_password()
+        """登录账号"""
+        phone = self.home.ele_input_text()[0]
+        pwd = self.home.ele_input_text()[1]
         phone.click()  # 激活phone输入框
-        phone.send_keys('18011111111')  # 输入手机号
+        phone.send_keys('18011111115')  # 输入手机号
         pwd.click()  # 激活pwd输入框
-        pwd.send_keys('1111')  # 输入密码
+        pwd.send_keys('1115')  # 输入密码
         self.home.login_button()
 
 
     @teststeps
     def receive_remind_operate(self):
         """接收作业提醒"""
-        print('-----------------------------------')
-
         value = self.account.checkbox_button().get_attribute('checked')   # 接收作业提醒 选择框check属性
-        print(value)
         if value == "false":
             print('接收作业提醒 选择框 未被 默认 打开')
             self.account.checkbox_button().click()
@@ -104,47 +104,50 @@ class MineAccount(unittest.TestCase):
             else:
                 self.account.checkbox_button().click()  # 打开 选择框
 
-        print('-----------------------------------')
 
     @teststeps
     def modify_remark_operate(self):
+        """备注校验"""
         for i in range(len(remark_data)):
             self.account.remark_name()  # 点击 弹出修改备注名 弹框
 
             if self.account.wait_check_remark_name():
                 remark = self.account.remark_edittext()  # 请输入备注名 输入框
                 remark.click()   # 激活输入框
-                remark.clear()
+                remark.clear()   #备注名清除
                 remark.send_keys(remark_data[i]['remark'])  # 输入备注名
 
-                self.account.confirm_update()  # 点击确定按钮
+                self.account.confirm_button()  # 点击确定按钮
                 print('修改备注为:', remark_data[i]['remark'])
 
-            if self.account.wait_check_remark_cancel():
+            if self.account.wait_check_remark_cancel(): #判断取消按钮是否还存在
                 print('修改备注 失败')
                 for j in range(3):
-                    self.account.confirm_update()  # 多次 点击确定按钮
+                    self.account.confirm_button()  # 多次 点击确定按钮
 
-                if self.account.wait_update_remark_error():
+                if self.account.update_remark_toast(): #获取备注名toast
                     print("错误原因：备注名不能超过10个字")
+
                 self.account.cancel_button()  # 点击取消按钮
             else:
                 if self.account.wait_check_remark_tips_page():  # 若修改备注名成功的弹框文案存在
-                    self.account.success_button()  # 点击确定按钮
-
-                    item = self.account.remark()  # 获取 备注名
-                    name = item.get_attribute('contentDescription')
-                    if name!= remark_data[i]['remark']:
-                        if name == '未设置' :
-                            if remark_data[i]['remark'].strip()!= ""  :
-                                print('★★★ Error - 备注名 未保存成功')
+                    print('修改备注成功')
+                    self.account.confirm_button()  # 点击确定按钮
+                    if self.account.wait_check_remark_page():
+                        item = self.account.remark()  # 获取 备注名
+                        name = item.text
+                        if name!= remark_data[i]['remark']:
+                            if name == '未设置' :
+                                if remark_data[i]['remark'].strip()!= ""  :
+                                    print('★★★ Error - 备注名 未保存成功')
+                                else:
+                                    print("备注名 保存成功")
                             else:
-                                print("备注名 保存成功")
+                                print('★★★ Error - 备注名 未保存成功')
                         else:
-                            print('★★★ Error - 备注名 未保存成功')
-                    else:
-                        print("备注名保存成功")
+                            print("备注名保存成功")
 
-            if self.account.wait_check_account() is False:  # 页面检查点
+            if self.account.wait_check_account_page() is False:  # 页面检查点
                 print('★★★ Error - 未进入我的账号 页面')
             print('---------------------------------------')
+

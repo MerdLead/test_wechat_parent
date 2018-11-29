@@ -1,21 +1,20 @@
 #!/usr/bin/env python
 # code:UTF-8  
 # @Author  : SUN FEIFEI
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from conf.decorator import teststep
 from conf.base_page import BasePage
 
 
-class Toast(BasePage):
+class Toast (BasePage):
     @teststep
-    def find_toast(self, text, timeout=1000):
+    def find_toast_by_xpath(self, text):
         """is toast exist, return True or False"""
-        # noinspection PyBroadException
         try:
-            toast = ("xpath", ".//*[contains(@text,'%s')]" % text)
-            t = self.driver \
-                .wait_for_element_by_xpath(toast, timeout=timeout)
+            toast = (By.XPATH, ".//*[contains(@text,'%s')]" % text)
+            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(toast))
             return True
         except Exception:
             return False

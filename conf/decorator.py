@@ -1,6 +1,6 @@
 import time
 
-from functools import wraps
+from functools import wraps, update_wrapper
 from selenium.common.exceptions import WebDriverException
 from conf.base_page import BasePage
 from conf.report_path import ReportPath
@@ -8,7 +8,6 @@ from conf.log import Log
 
 flag = 'IMAGE:'
 log = Log()
-
 
 def _screenshot(name):
     date_time = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
@@ -127,7 +126,6 @@ def _wrapper(func):
                 raise Exception(e)
             else:
                 raise Exception(flag + _screenshot(func.__qualname__))
-
     return wrapper
 
 
